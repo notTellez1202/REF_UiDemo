@@ -6,7 +6,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>745,1389</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>745,1385</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="27">
@@ -73,7 +73,7 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="568,1324" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="568,1320" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Decimal" Name="CashIn" />
       <Variable x:TypeArguments="x:Decimal" Name="OnUsCheck" />
@@ -122,7 +122,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:MultipleAssign>
-    <Sequence sap2010:Annotation.AnnotationText="We have a limit defined for the maximun transaction, the sum of all 3 fields must be less than the threshold. There should be no itmes with more tha the amount, but we need to check and if any transaction is found, we skip it for processing and set the status to Failed as Business Rule Exception." DisplayName="Input data validation" sap:VirtualizedContainerService.HintSize="526,534" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence sap2010:Annotation.AnnotationText="We have a limit defined for the maximun transaction, the sum of all 3 fields must be less than the threshold. There should be no itmes with more tha the amount, but we need to check and if any transaction is found, we skip it for processing and set the status to Failed as Business Rule Exception." DisplayName="Input data validation" sap:VirtualizedContainerService.HintSize="526,530" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:Decimal" Name="TransactionSum" />
       </Sequence.Variables>
@@ -140,15 +140,15 @@
           <InArgument x:TypeArguments="x:Decimal">[CashIn + OnUsCheck + NotOnUsCheck]</InArgument>
         </Assign.Value>
       </Assign>
-      <If Condition="[TransactionSum &gt; CDec(in_Config(&quot;ManualTransactionThreshold&quot;))]" sap:VirtualizedContainerService.HintSize="484,270" sap2010:WorkflowViewState.IdRef="If_1">
+      <If Condition="[TransactionSum &gt; CDec(in_Config(&quot;ManualTransactionThreshold&quot;))]" DisplayName="If TransactionSum exceeds Threshold" sap:VirtualizedContainerService.HintSize="484,266" sap2010:WorkflowViewState.IdRef="If_1">
         <If.Then>
-          <Sequence sap:VirtualizedContainerService.HintSize="200,83" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Throw sap2010:Annotation.AnnotationText="The sum of transaction items exceeds the maximun allowed value." DisplayName="Throw BRE - Exceeds threshodld" Exception="[New BusinessRuleException(String.Format(&quot;The sum of transaction items, {0}, exceeds the maximun allowed value of {1}&quot;, TransactionSum, in_Config(&quot;ManualTransactionThreshold&quot;)))]" sap:VirtualizedContainerService.HintSize="200,79" sap2010:WorkflowViewState.IdRef="Throw_1">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-          </Sequence>
+          </Throw>
         </If.Then>
         <If.Else>
           <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
